@@ -26,13 +26,13 @@
         <form onsubmit="handleSubmit(event)">
             <div class="mb-6">
                 <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
-                    Your Name
+                    Mail Prefix
                 </label>
                 <input
                     type="text"
-                    id="name"
-                    name="name"
-                    placeholder="e.g., Jane Doe"
+                    id="prefix"
+                    name="prefix"
+                    placeholder="e.g., dzira24"
                     required
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out placeholder-gray-400"
                 />
@@ -46,7 +46,7 @@
                     id="comment"
                     name="comment"
                     rows="4"
-                    placeholder="Type your comment here..."
+                    placeholder="Type your comment and grade here..."
                     required
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out resize-none placeholder-gray-400"
                 ></textarea>
@@ -57,7 +57,7 @@
                     type="submit"
                     class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-md text-base font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-200 ease-in-out transform hover:scale-[1.01] active:scale-[0.99]"
                 >
-                    Submit Feedback
+                    Submit Data
                 </button>
             </div>
         </form>
@@ -71,21 +71,17 @@
         function handleSubmit(event) {
             event.preventDefault();
 
-            const name = document.getElementById('name').value;
+            const prefix = document.getElementById('prefix').value;
             const comment = document.getElementById('comment').value;
             const messageBox = document.getElementById('message-box');
-
-            console.log("Name:", name);
-            console.log("Comment:", comment);
 
             messageBox.classList.remove('hidden', 'bg-red-100', 'text-red-700');
             messageBox.classList.add('bg-green-100', 'text-green-700', 'block');
             messageBox.innerHTML = `
-                <strong class="font-bold">Thank you, ${name}!</strong>
-                <span class="block sm:inline">Your comment has been submitted.</span>
+                <span class="block sm:inline">Your comment has been saved.</span>
             `;
 
-            document.getElementById('name').value = '';
+            document.getElementById('prefix').value = '';
             document.getElementById('comment').value = '';
         }
     </script>
