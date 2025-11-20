@@ -7,6 +7,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 SCOPES = ["https://mail.google.com/"]
+RESULTS_PATH = "../data/grades.json"
 
 
 def auth():
@@ -27,6 +28,14 @@ def auth():
             token.write(creds.to_json())
 
     return creds
+
+
+def readResults(path):
+    pass
+
+
+def sendResults():
+    pass
 
 
 def main():
