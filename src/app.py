@@ -1,27 +1,39 @@
 import os, json
 import tkinter as tk
+from json import JSONDecodeError
 from tkinter import messagebox
 
 from mailer import GradeMailer
 
-GRADES_PATH = "./data/grades.json"
+GRADES_FILE = "./data/grades.json"
 
 
 def writeGrade(pref, comment):
-    if not os.path.exists(GRADES_PATH):
-        data = json.dumps({pref: comment})
-        with open(GRADES_PATH, "w") as f:
-            f.write(data)
-        return
+    try:
+        if os.stat(GRADES_FILE).st_size == 0:
+            print("[LOG] File was empty writing JSON")
+            data = json.loads('{}')
+        else:
+            with open(GRADES_FILE, "r") as f:
+                data = json.load(f)
 
-    with open(GRADES_PATH, "r+") as f:
-        data = json.load(f)
-        data[pref] = comment
-        data_json = json.dumps(data)
-        f.write(data_json)
+        data.update({pref: comment})
+        with open(GRADES_FILE, "w") as f:
+            json.dump(data, f)
+        print("[LOG] Appended to JSON file")
+
+    except FileNotFoundError:
+        print(f"[ERROR] File '{GRADES_FILE}' was not found")
+    except JSONDecodeError:
+        print(f"[ERROR] Could not decode the file '{GRADES_FILE}'")
 
 
-def submit(pref_entry, com_entry):
+# TODO: send out grades and clear the json file
+def handle_send():
+    pass
+
+
+def handle_submit(pref_entry, com_entry):
     pref = pref_entry.get()
     comment = com_entry.get("1.0", tk.END).strip()
 
@@ -50,8 +62,8 @@ def main():
     com_entry = tk.Text(root, width=40, height=5)
     com_entry.grid(row=1, column=1, padx=10, pady=5)
 
-    submit_btn = tk.Button(root, text="Submit", command=lambda: submit(pref_entry, com_entry))
-    submit_btn.grid(row=2, column=1, pady=10, sticky="e")
+    handle_submit_btn = tk.Button(root, text="Submit", command=lambda: handle_submit(pref_entry, com_entry))
+    handle_submit_btn.grid(row=2, column=1, pady=10, sticky="e")
 
     root.mainloop()
 
