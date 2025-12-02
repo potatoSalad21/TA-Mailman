@@ -1,5 +1,6 @@
 import os.path
 import json
+import base64
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -20,7 +21,7 @@ class GradeMailer:
     _grades = None
 
     def __init__(self):
-        _creds = self.auth()
+        pass
 
     def readGrades(self, path):
         with open(path, 'r',) as data:
@@ -28,6 +29,7 @@ class GradeMailer:
 
     def mailGrades(self):
         for prefix in self._grades:
+            print(prefix, ": ", self._grades[prefix])
             try:
                 service = build("gmail", "v1", credentials=self._creds)
                 msg = EmailMessage()
@@ -39,8 +41,8 @@ class GradeMailer:
                 encoded_msg = base64.urlsafe_b64encode(msg.as_bytes()).decode()
                 send_msg = (
                     service.users()
-                        .messages(),
-                        .send(userId="me", body=create_message)
+                        .messages()
+                        .send(userId="me", body={"raw": encoded_msg})
                         .execute()
                 )
 
@@ -48,7 +50,6 @@ class GradeMailer:
 
             except HttpError as err:
                 print(f"Http error: {err}")
-                send_msg = None
 
     def auth(self):
         creds = None
@@ -67,4 +68,4 @@ class GradeMailer:
             with open("token.json", "w") as token:
                 token.write(creds.to_json())
 
-        return creds
+        self._creds = creds

@@ -31,6 +31,7 @@ def writeGrade(pref, comment):
 def handle_send(gm):
     gm.readGrades(GRADES_FILE)
     gm.mailGrades()
+    print("[LOG] Sent out grades")
 
     with open(GRADES_FILE, "w") as f:
         json.dump({}, f)
