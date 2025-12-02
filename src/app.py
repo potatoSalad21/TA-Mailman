@@ -28,9 +28,12 @@ def writeGrade(pref, comment):
         print(f"[ERROR] Could not decode the file '{GRADES_FILE}'")
 
 
-# TODO: send out grades and clear the json file
-def handle_send():
-    pass
+def handle_send(gm):
+    gm.readGrades(GRADES_FILE)
+    gm.mailGrades()
+
+    with open(GRADES_FILE, "w") as f:
+        json.dump({}, f)
 
 
 def handle_submit(pref_entry, com_entry):
@@ -62,8 +65,11 @@ def main():
     com_entry = tk.Text(root, width=40, height=5)
     com_entry.grid(row=1, column=1, padx=10, pady=5)
 
-    handle_submit_btn = tk.Button(root, text="Submit", command=lambda: handle_submit(pref_entry, com_entry))
-    handle_submit_btn.grid(row=2, column=1, pady=10, sticky="e")
+    submit_btn = tk.Button(root, text="Submit", command=lambda: handle_submit(pref_entry, com_entry))
+    submit_btn.grid(row=2, column=1, pady=10, sticky="e")
+
+    send_btn = tk.Button(root, text="Send", command=lambda: handle_send(gm))
+    send_btn.grid(row=3, column=1, pady=10, sticky='e')
 
     root.mainloop()
 
