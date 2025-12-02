@@ -7,6 +7,7 @@
 
 ### Requirements
 - Python 3.x
+- Google cloud app
 
 ### How to Run and Use
 1. **Clone the repo**
@@ -18,7 +19,8 @@ cd TA-Mailman
 ```sh
 pip install -r requirements.txt
 ```
-3. **Run the program**
+3. **Place your google cloud app's credentials.json in program folder**
+4. **Run the program**
 ```sh
 python3 src/app.py
 ```
