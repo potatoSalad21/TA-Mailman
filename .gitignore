@@ -1,5 +1,4 @@
 credentials.json
 token.json
-data/*
 __pycache__/
 src/__pycache__/

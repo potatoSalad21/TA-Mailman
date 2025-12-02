@@ -10,10 +10,10 @@ from googleapiclient.errors import HttpError
 from email.message import EmailMessage
 
 SCOPES = ["https://mail.google.com/"]
-UNI_MAIL_PREF = "@freeuni.edu.ge"
 
-TA_MAIL = "dzira24@freeuni.edu.ge"
-SUBJECT = "Programming Methodology Assignment"
+UNI_MAIL_POSTF = "@freeuni.edu.ge"
+TA_MAIL = "YOUR_UNI_MAIL_HERE"
+SUBJECT = "MAIL_SUBJECT_PLACEHOLDER"
 
 
 class GradeMailer:
@@ -33,7 +33,7 @@ class GradeMailer:
             try:
                 service = build("gmail", "v1", credentials=self._creds)
                 msg = EmailMessage()
-                msg["To"] = prefix + UNI_MAIL_PREF
+                msg["To"] = prefix + UNI_MAIL_POSTF
                 msg["From"] = TA_MAIL
                 msg["Subject"] = SUBJECT
                 msg.set_content(self._grades[prefix])
